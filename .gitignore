@@ -1,0 +1,24 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
+
+# Source data and generated artifacts
+data/
+models/
+reports/generated/
+*.parquet
+*.joblib
+*.pkl
