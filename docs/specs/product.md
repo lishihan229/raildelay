@@ -3,6 +3,10 @@
 Status: September 2025 archive selected for exploration; all ten proposed
 stations verified. Modeling limitations are recorded in `sample-audit.md`.
 
+Implementation checkpoint: September cleaning, quality accounting, four static
+charts, and a reproducible report are implemented. Model training and validation
+across additional months remain outstanding; the full first slice is not complete.
+
 ## Purpose
 
 Use Python to understand railway delays, predict arrival delay, and communicate

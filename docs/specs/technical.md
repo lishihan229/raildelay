@@ -88,6 +88,30 @@ remain. Never silently download a different dataset as a fallback.
 
 ## Modeling and evaluation
 
+### First implementation checkpoint: exploratory analysis
+
+Before modeling, deliver `python -m raildelay` for the pinned September 2025
+sample. Verify its checksum, load only the ten audited EVA identifiers, and
+account for exclusions in this order: missing stop identifiers, all occurrences
+of duplicate station/stop keys, Bus records, missing category, canceled arrivals,
+unknown cancellation status, missing/invalid arrival timestamps, and scheduled
+arrivals outside September. Reject ambiguous/nonexistent Europe/Berlin local
+times rather than guessing an offset. Keep signed delays, flag equal timestamps
+as ambiguous zeros, and flag absolute delays above 24 hours without removing them.
+
+Export the retained rows to Parquet and a quality summary to JSON. Produce four
+PNG charts: delay distribution, station medians with counts, local-hour medians
+with counts, and station-by-day retained arrival counts. Station comparisons
+remain in fixed geographic-list order, not a performance ranking. Plot full
+coverage including zero-count days. Show a central histogram with the excluded
+tail count explicitly stated; all statistics retain the tails.
+
+The generated Markdown report must include exclusions, missing values, coverage,
+summary metrics, chart links, provenance, and limitations. Cover cleaning and
+time handling with synthetic tests and verify a complete run on the pinned input.
+Modeling, multi-month evaluation, and causal investigation of coverage changes
+remain subsequent checkpoints.
+
 The prediction time is departure from the selected upstream stop. Only use
 features known at that moment; changed arrival is exclusively a target input.
 

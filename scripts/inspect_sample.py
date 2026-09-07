@@ -10,11 +10,17 @@ import pyarrow
 import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
-
 STATIONS = (
-    "Aachen Hbf", "Düsseldorf Hbf", "Köln Hbf", "Essen Hbf",
-    "Duisburg Hbf", "Dortmund Hbf", "Bochum Hbf", "Wuppertal Hbf",
-    "Bonn Hbf", "Mönchengladbach Hbf",
+    "Aachen Hbf",
+    "Düsseldorf Hbf",
+    "Köln Hbf",
+    "Essen Hbf",
+    "Duisburg Hbf",
+    "Dortmund Hbf",
+    "Bochum Hbf",
+    "Wuppertal Hbf",
+    "Bonn Hbf",
+    "Mönchengladbach Hbf",
 )
 
 
@@ -23,8 +29,14 @@ def inspect(path):
         checksum = hashlib.file_digest(source, "sha256").hexdigest()
     parquet = pq.ParquetFile(path)
     columns = [
-        "station_name", "eva", "time", "id", "train_type",
-        "arrival_planned_time", "arrival_change_time", "arrival_is_canceled",
+        "station_name",
+        "eva",
+        "time",
+        "id",
+        "train_type",
+        "arrival_planned_time",
+        "arrival_change_time",
+        "arrival_is_canceled",
     ]
     missing = set(columns) - set(parquet.schema_arrow.names)
     if missing:
@@ -64,7 +76,9 @@ def inspect(path):
                 if planned == changed:
                     count["equal_arrival_times"] += 1
     return {
-        "file": str(path), "bytes": path.stat().st_size, "sha256": checksum,
+        "file": str(path),
+        "bytes": path.stat().st_size,
+        "sha256": checksum,
         "pyarrow_version": pyarrow.__version__,
         "total_rows": parquet.metadata.num_rows,
         "total_station_names": len(all_stations),
@@ -73,7 +87,8 @@ def inspect(path):
         "selected_train_types": dict(categories),
         "stations": {
             name: {
-                "eva": sorted(identifiers[name]), **counts[name],
+                "eva": sorted(identifiers[name]),
+                **counts[name],
                 "days_present": len(days[name]),
                 "daily_rows_by_archive_time": dict(sorted(days[name].items())),
             }
