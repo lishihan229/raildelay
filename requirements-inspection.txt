@@ -1,0 +1,2 @@
+# Minimal environment for the source-selection audit, not the full ML pipeline.
+pyarrow==25.0.1

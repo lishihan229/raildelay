@@ -10,9 +10,9 @@ support exploration, but the final workflow must run without manual notebook edi
 
 ## NRW source integration
 
-Use the preferred historical archive described in `data-source.md`. Inspect one
-monthly Parquet file (a compressed tabular format) before writing ingestion code.
-Add a Parquet reader dependency when implementation starts. Pin the source
+Use the historical archive described in `data-source.md`. The September sample
+is inspected in `sample-audit.md`; `requirements-inspection.txt` pins its reader.
+Parquet is a compressed tabular format. Pin the source
 revision and file checksum so later upstream reprocessing cannot silently change
 results. Start with one month; expand after measuring memory and disk usage.
 
@@ -25,11 +25,10 @@ Treat source-local timestamps as Europe/Berlin and explicitly handle ambiguous
 or nonexistent daylight saving times. Use normalized timestamps for chronology
 and local time for hour-of-day features. Keep source values for auditing.
 
-The proposed target remains arrival delay. Confirm that changed arrival values
-are suitable final observations; otherwise name the target “last reported arrival
-delay” and revise the product spec before training. Never mix arrival and
-departure delay into one target or infer punctuality from absent updates without
-evidence. Historical final records do not prove when a feature became available:
+The target is archive-reported arrival delay with schedule fallback, as documented
+in `sample-audit.md`. Missing updates have already been replaced by planned times
+upstream; zeros cannot be treated as verified punctuality. Never mix arrival and
+departure delay into one target. Historical final records do not prove when a feature became available:
 omit upstream departure-delay features unless availability can be established.
 Schedule-only features provide an initial alternative within the chosen
 departure-time prediction task.
@@ -43,7 +42,8 @@ departure-time prediction task.
 - pytest for meaningful validation and pipeline checks; Ruff for code checks.
 
 Choose a supported Python version and record dependency versions when the first
-implementation begins. Do not install dependencies during documentation setup.
+implementation begins. The source-selection environment currently uses Python
+3.12 and the minimal dependencies in `requirements-inspection.txt`.
 
 ## Lean structure
 
@@ -65,16 +65,16 @@ generated model artifacts before staging any code or data.
 The intended observation is a train journey's arrival at a specified stop,
 uniquely identified by service date, trip identifier, and stop sequence.
 
-- Required for the target: scheduled and actual arrival timestamps.
+- Required for the proxy target: planned and archive changed arrival timestamps.
 - Required for meaningful grouping: station identifier and service date.
 - Candidate predictors: scheduled arrival hour, weekday, route, station, and
   departure delay where it is known at the chosen prediction time.
 - Preserve source identifiers and document timezone handling, daylight saving
   transitions, and journeys crossing midnight.
 
-Compute signed arrival delay in minutes as actual minus scheduled arrival;
+Compute signed proxy delay in minutes as archive changed minus planned arrival;
 negative values indicate early arrivals. Do not silently clip them. Count missing
-actual arrivals and cancellations separately; they are not zero-delay records.
+arrival pairs and cancellations separately; they are not zero-delay records.
 Document how duplicates, implausible timestamps, and missing fields are handled.
 If source data cannot support this target, revise both specs before implementation.
 
@@ -89,7 +89,7 @@ remain. Never silently download a different dataset as a fallback.
 ## Modeling and evaluation
 
 The prediction time is departure from the selected upstream stop. Only use
-features known at that moment; actual arrival is exclusively a target input.
+features known at that moment; changed arrival is exclusively a target input.
 
 Split chronologically into training, validation, and final test periods. Keep
 records from the same train journey in one partition and ensure training labels

@@ -1,13 +1,17 @@
 # Raildelay product specification
 
-Status: Nordrhein-Westfalen scope selected; preferred archive identified,
-pending sample and coverage validation.
+Status: September 2025 archive selected for exploration; all ten proposed
+stations verified. Modeling limitations are recorded in `sample-audit.md`.
 
 ## Purpose
 
 Use Python to understand railway delays, predict arrival delay, and communicate
 the findings through clear visualizations. Start with a reproducible local
 analysis before adding a dashboard or deployment.
+
+For this archive, “arrival delay” means archive-reported arrival delay with
+schedule fallback when updates are absent. It is a proxy for actual delay;
+the report must explain that apparent punctuality can include missing updates.
 
 ## Geographic scope and data source
 
@@ -68,7 +72,7 @@ and an interactive dashboard. A dashboard can follow once the analysis works.
 
 ## Open decisions
 
-- Exact archive release, permitted data usage, and verified station coverage.
+- Adjacent-month coverage and remaining source-quality checks in `sample-audit.md`.
 - Exact observation unit and available departure-time predictors.
 - Date range, available data volume, and minimum group size for comparisons.
 - Whether a later visualization interface should use Streamlit.

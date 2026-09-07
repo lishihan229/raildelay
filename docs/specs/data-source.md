@@ -1,6 +1,8 @@
 # NRW data source decision
 
-Checked: 2026-09-07. Preferred source identified; no data downloaded or validated yet.
+Checked: 2026-09-07. September 2025 downloaded and audited; selected for initial
+exploration. See `sample-audit.md` for the pinned release, verified station
+coverage, reproducible audit, and remaining modeling limitations.
 
 ## Preferred historical archive
 
@@ -25,6 +27,10 @@ For this historical project, prefer the archive; a live collection service would
 require a separate scope decision.
 
 ## Acceptance gates before ingestion implementation
+
+The sample audit resolves file size, checksum, schema, station presence, and
+initial missing-value checks. Remaining gates concern hourly coverage, adjacent
+months, journey identity, and the limits of reconstructed arrival labels.
 
 - Inspect one monthly file's schema, size, and station inventory.
 - Verify the four required stations and assess the proposed additional stations.
