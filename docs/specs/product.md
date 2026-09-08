@@ -1,11 +1,14 @@
 # Raildelay product specification
 
-Status: September 2025 archive selected for exploration; all ten proposed
-stations verified. Modeling limitations are recorded in `sample-audit.md`.
+Status: July–October 2025 archives validated for ten NRW stations. First
+chronological model experiment complete; see `model-experiment.md` and
+`../results/first-model.md`.
 
 Implementation checkpoint: September cleaning, quality accounting, four static
-charts, and a reproducible report are implemented. Model training and validation
-across additional months remain outstanding; the full first slice is not complete.
+charts, and a reproducible report are implemented. The model checkpoint includes
+a median baseline, Ridge regression, chronological validation, a reserved October
+evaluation, and error reports. A live departure-time system is outside this
+benchmark because historical feature-availability timestamps are not preserved.
 
 ## Purpose
 
@@ -44,6 +47,10 @@ data analytics and machine learning workflow.
 - Where are delays frequent or severe, and how much data supports each finding?
 - Can information available at departure improve predictions over a simple baseline?
 
+The implemented approximation uses timetable features intended to be available
+before departure. It is explicitly retrospective: final plans in the archive
+cannot prove what was displayed at a particular historical departure time.
+
 ## First complete slice
 
 1. Validate an NRW subset of the preferred historical archive and document its
@@ -76,9 +83,9 @@ and an interactive dashboard. A dashboard can follow once the analysis works.
 
 ## Open decisions
 
-- Adjacent-month coverage and remaining source-quality checks in `sample-audit.md`.
-- Exact observation unit and available departure-time predictors.
-- Date range, available data volume, and minimum group size for comparisons.
+- A fresh evaluation month for any subsequent model-selection cycle.
+- Sources that retain collection times and historical feature availability.
+- Minimum group sizes and uncertainty estimates for stronger comparisons.
 - Whether a later visualization interface should use Streamlit.
 
 Resolve dataset-dependent decisions before building the ingestion pipeline.

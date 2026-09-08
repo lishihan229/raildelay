@@ -1,6 +1,7 @@
 # Raildelay technical specification
 
-Status: Initial design; confirm the data contract against the selected source.
+Status: Exploratory analysis and first chronological model checkpoint implemented.
+The concrete experiment is specified in `model-experiment.md`.
 
 ## Approach
 
@@ -112,8 +113,11 @@ time handling with synthetic tests and verify a complete run on the pinned input
 Modeling, multi-month evaluation, and causal investigation of coverage changes
 remain subsequent checkpoints.
 
-The prediction time is departure from the selected upstream stop. Only use
-features known at that moment; changed arrival is exclusively a target input.
+The intended use is planning before departure. The implemented benchmark uses
+only station, planned arrival hour/weekday, and published train category.
+Historical plan snapshots are unavailable, so exact departure-time availability
+cannot be verified. Changed arrival is exclusively a target or boundary-check
+input. See `model-experiment.md` for the fixed periods and permitted features.
 
 Split chronologically into training, validation, and final test periods. Keep
 records from the same train journey in one partition and ensure training labels

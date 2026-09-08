@@ -64,7 +64,7 @@ def local_times(values: pd.Series) -> pd.Series:
     return parsed.dt.tz_localize("Europe/Berlin", ambiguous="NaT", nonexistent="NaT")
 
 
-def prepare(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict, pd.DataFrame]:
+def prepare(frame: pd.DataFrame, month: str = "2025-09") -> tuple[pd.DataFrame, dict, pd.DataFrame]:
     missing = set(COLUMNS) - set(frame.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
@@ -101,10 +101,11 @@ def prepare(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict, pd.DataFrame]:
     planned = local_times(frame["arrival_planned_time"])
     changed = local_times(frame["arrival_change_time"])
     exclude("missing_or_invalid_arrival_pair", planned.isna() | changed.isna())
-    in_month = planned.ge(pd.Timestamp("2025-09-01", tz="Europe/Berlin")) & planned.lt(
-        pd.Timestamp("2025-10-01", tz="Europe/Berlin")
-    )
-    exclude("planned_arrival_outside_september", ~in_month)
+    month_start = pd.Timestamp(f"{month}-01", tz="Europe/Berlin")
+    month_end = month_start + pd.offsets.MonthBegin(1)
+    in_month = planned.ge(month_start) & planned.lt(month_end)
+    reason = "planned_arrival_outside_september" if month == "2025-09" else "outside_month"
+    exclude(reason, ~in_month)
     frame["planned_arrival_utc"] = planned.dt.tz_convert("UTC")
     frame["changed_arrival_utc"] = changed.dt.tz_convert("UTC")
     frame["planned_date"] = planned.dt.strftime("%Y-%m-%d")
@@ -127,8 +128,9 @@ def prepare(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict, pd.DataFrame]:
     )
     if len(clean) + sum(quality["exclusions"].values()) != len(frame):
         raise AssertionError("Exclusion accounting does not reconcile.")
+    days = pd.date_range(month_start, month_end, inclusive="left").strftime("%Y-%m-%d")
     coverage = pd.crosstab(clean["station_name"], clean["planned_date"]).reindex(
-        index=list(STATIONS.values()), columns=DAYS, fill_value=0
+        index=list(STATIONS.values()), columns=days, fill_value=0
     )
     quality["retained_days_per_station"] = {
         str(name): int(count) for name, count in coverage.gt(0).sum(axis=1).items()

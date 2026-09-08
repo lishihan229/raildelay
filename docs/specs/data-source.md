@@ -4,6 +4,11 @@ Checked: 2026-09-07. September 2025 downloaded and audited; selected for initial
 exploration. See `sample-audit.md` for the pinned release, verified station
 coverage, reproducible audit, and remaining modeling limitations.
 
+Update 2026-09-08: July, August, and October also downloaded and checksum-verified.
+All four schemas match. Full journey keys and chronological event separation
+were checked for the model cohorts. See `model-experiment.md` and
+`../results/first-model.md`; collection-time provenance remains unavailable.
+
 ## Preferred historical archive
 
 [piebro/deutsche-bahn-data](https://github.com/piebro/deutsche-bahn-data) is a
@@ -28,9 +33,10 @@ require a separate scope decision.
 
 ## Acceptance gates before ingestion implementation
 
-The sample audit resolves file size, checksum, schema, station presence, and
-initial missing-value checks. Remaining gates concern hourly coverage, adjacent
-months, journey identity, and the limits of reconstructed arrival labels.
+The sample and model audits resolve file sizes, checksums, schema consistency,
+station presence, initial missing-value checks, adjacent-month cohorts, and full
+journey identity. Remaining limitations concern hourly completeness, historical
+availability, and reconstructed arrival labels. The original checklist follows.
 
 - Inspect one monthly file's schema, size, and station inventory.
 - Verify the four required stations and assess the proposed additional stations.

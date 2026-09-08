@@ -7,7 +7,10 @@ name = "raildelay"
 version = "0.1.0"
 description = "Reproducible exploration of NRW railway delay archives"
 requires-python = ">=3.12"
-dependencies = ["pandas>=2.2,<4", "pyarrow==25.0.1", "matplotlib>=3.9,<4", "numpy>=1.26,<3"]
+dependencies = [
+    "pandas>=2.2,<4", "pyarrow==25.0.1", "matplotlib>=3.9,<4", "numpy>=1.26,<3",
+    "scikit-learn>=1.6,<2", "joblib>=1.4,<2",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "ruff>=0.9,<1"]

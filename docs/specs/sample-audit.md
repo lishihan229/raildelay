@@ -2,6 +2,11 @@
 
 Inspected locally on 2026-09-07 with Python 3.12 and PyArrow 25.0.1.
 
+Follow-up on 2026-09-08: July, August, and October have now been inspected and
+used in the first model experiment. See `../results/first-model.md` for that
+decision and the investigation of Bochum's September gaps. The audit below
+records the initial source-selection state.
+
 ## Decision
 
 Use September 2025 from `piebro/deutsche-bahn-data` for the first exploratory

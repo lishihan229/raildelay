@@ -3,7 +3,8 @@
 Python data analysis of railway arrivals at ten selected stations in
 Nordrhein-Westfalen. The current slice cleans September 2025 historical
 DB-source records and generates four charts, a quality summary, and a report.
-Model training is the next stage.
+A second command compares a median baseline and Ridge regression on July–October
+2025 with chronological, journey-separated evaluation.
 
 ## Run locally
 
@@ -45,6 +46,36 @@ replaces only generated outputs at the paths below.
 Raw and processed data, generated reports, and environments are excluded from
 Git. The report and PNGs can be shared together with their attribution intact.
 
+## Run the model experiment
+
+July, August, and October archives are already downloaded in this workspace.
+On a fresh checkout, fetch these three additional pinned files (about 315 MB
+combined). The shell loop repeats the same download for each month:
+
+```bash
+for raildelay_month in 07 08 10; do
+  curl --fail --location --output "data/raw/data-2025-${raildelay_month}.parquet" \
+    "https://huggingface.co/datasets/piebro/deutsche-bahn-data/resolve/3e9e69149f4008d0c24348c51d1ec79b552adaa5/monthly_processed_data/data-2025-${raildelay_month}.parquet"
+done
+.venv/bin/python -m raildelay.experiment
+```
+
+The experiment verifies every checksum, parses full journey identifiers,
+excludes month-edge journeys, fits on July, and selects on August. September is
+development data because it was previously explored. October was held out until
+selection was saved. Rerunning reproduces the fixed experiment; it does not make
+October unseen again. A future model-selection cycle needs a new test period.
+
+Outputs are in `reports/generated/model/`: `report.md`, three charts, monthly
+audits and coverage CSVs, model metrics, and station/hour/category error tables.
+Fitted models are excluded from Git in `models/timetable-baselines.joblib`.
+
+The validation-selected baseline had October MAE **7.682 minutes** and RMSE
+**15.131 minutes**; Ridge had MAE **7.659** and RMSE **13.097**. The small test MAE
+difference is not a reason to change the method selected on validation data.
+See [first experiment results](docs/results/first-model.md) and the
+[fixed protocol](docs/specs/model-experiment.md).
+
 ## Interpretation
 
 The archive contains trains reported through DB's data sources, not exclusively
@@ -61,6 +92,9 @@ Bochum has retained arrivals on 22 days, while the other nine stations have
 records on all 30. Collection completeness and changing service patterns must
 be investigated before drawing station performance conclusions. Monthly file
 boundaries also limit recovery of scheduled arrivals stored in adjacent files.
+The model report documents construction-related service changes consistent with
+Bochum's pattern. Missing zero-delay provenance and unusual early arrivals remain
+limitations of the monthly archive, not values silently corrected by the model.
 
 ## Checks
 
@@ -74,6 +108,7 @@ complete workflow on the real input.
 .venv/bin/ruff format --check src tests scripts
 .venv/bin/python -m pip check
 .venv/bin/python -m raildelay
+.venv/bin/python -m raildelay.experiment
 ```
 
 ## Specifications and source
