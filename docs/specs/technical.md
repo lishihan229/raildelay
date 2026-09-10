@@ -2,6 +2,8 @@
 
 Status: Exploratory analysis and first chronological model checkpoint implemented.
 The concrete experiment is specified in `model-experiment.md`.
+The second risk experiment is also implemented and evaluated on November;
+see `../results/risk-model.md` for results and the failed calibration gate.
 
 ## Approach
 
@@ -160,7 +162,14 @@ follow the fixed [risk experiment protocol](risk-experiment.md), which covers
 label quality, cancellations, prediction-time feature availability, split dates,
 baseline fallbacks, sample support and the practical improvement threshold.
 Its label-blind preflight, development selection and final evaluation must be
-separate entrypoints. November 2025 is reserved, with compatibility still pending.
+separate entrypoints. Implemented commands are `raildelay.risk_preflight` and
+`raildelay.risk_experiment develop|evaluate`. November compatibility passed and
+final evaluation is complete; no further selection may treat it as unseen.
+
+`risk_model.py` provides the training-only hierarchical references, classifiers,
+probability/support prediction API, promotion gate and paired bootstrap.
+`risk_report.py` exports probability reliability and group errors. Numerical
+training uses two threads through the directly declared `threadpoolctl` dependency.
 
 Use a fresh final test period and fit preprocessing, historical aggregates,
 model selection, and any probability calibration without final-test data.

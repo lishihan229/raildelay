@@ -1,8 +1,9 @@
 # Raildelay product specification
 
-Status: July–October 2025 archives validated for ten NRW stations. First
-chronological model experiment complete; see `model-experiment.md` and
-`../results/first-model.md`.
+Status: July–November 2025 validated for ten NRW stations. Both regression and
+risk-classification experiments are complete; see `../results/first-model.md`
+and `../results/risk-model.md`. The risk classifier improves Brier error but
+fails the predeclared calibration gate; live application reliability is unresolved.
 
 Implementation checkpoint: September cleaning, quality accounting, four static
 charts, and a reproducible report are implemented. The model checkpoint includes
@@ -107,9 +108,11 @@ and an interactive dashboard. A dashboard can follow once the analysis works.
 
 The second experiment is now specified in [risk-experiment.md](risk-experiment.md):
 train on July–August, select on September, confirm on October, and reserve
-November 2025 for final evaluation. November metadata is verified; schema,
-coverage and local checksum verification remain a label-blind preflight gate.
-Implementation and classifier results are pending.
+November 2025 for final evaluation. This experiment is complete: preflight and
+integrity checks passed, and November is now used. The historical baseline
+remains selected because the classifier failed the calibration gate. See
+[results and next research question](../results/risk-model.md). A new experiment
+needs a fresh final period and a predeclared training/calibration design.
 
 1. Validate the application data contract before modeling. Investigate how
    missing updates, cancellations, and changing station coverage affect the
@@ -144,7 +147,7 @@ as success. A usable historical demo alone does not establish live reliability.
 
 - How to obtain observation/availability evidence for practical reliability,
   and how representative-user feedback will validate the historical demo's usefulness.
-- Whether reserved November 2025 passes the predeclared compatibility/coverage gate.
+- A fresh final period and temporal calibration design for the next experiment.
 - Sources that retain collection times and historical feature availability.
 - Minimum group sizes and uncertainty estimates for stronger comparisons.
 - Whether a later visualization interface should use Streamlit.

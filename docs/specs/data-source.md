@@ -21,9 +21,12 @@ remain gates for practical reliability.
 The second [risk experiment](risk-experiment.md) reserves November 2025 at the
 same pinned revision. Directory metadata confirms a 587,317,041-byte file with
 SHA-256 `1a44f225bed25e600d8a417cf07829951e3cf7d4fa23f5e4e3fb963efc38be7b`.
-These are remote metadata, not a verified local download. Schema, selected-station
-coverage and compatibility have not yet been established; the size increase
-relative to October requires a label-blind preflight before model fitting.
+Update 2026-09-10: the local download matches that checksum/size. Required field
+types match October, and the planned-only preflight finds all ten stations on
+all 30 dates. Final cleaning retains 150,857 arrivals; journey boundaries leave
+140,950 evaluation rows. Outcomes were opened after model selection was saved.
+See [second experiment results](../results/risk-model.md); November is now used
+and cannot be the fresh final period for another selection cycle.
 
 [piebro/deutsche-bahn-data](https://github.com/piebro/deutsche-bahn-data) is a
 community archive of DB API records, distributed through

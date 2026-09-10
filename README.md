@@ -5,6 +5,8 @@ Nordrhein-Westfalen. The current slice cleans September 2025 historical
 DB-source records and generates four charts, a quality summary, and a report.
 A second command compares a median baseline and Ridge regression on July–October
 2025 with chronological, journey-separated evaluation.
+The risk workflow adds a >=15-minute classifier comparison with a reserved
+November evaluation and explicit probability-calibration checks.
 
 ## Run locally
 
@@ -97,8 +99,47 @@ Rerunning replaces only these generated audit outputs. See the
 
 The [second experiment protocol](docs/specs/risk-experiment.md) fixes the risk
 target, historical baselines, a small classifier search, support fallbacks,
-selection criteria, and November 2025 as the reserved final test. This is a
-specified next experiment; its implementation and results are still pending.
+selection criteria, and November 2025 as the reserved final test.
+
+## Run the risk model comparison
+
+The [completed risk experiment](docs/results/risk-model.md) found a 2.76% lower
+November Brier error for the best tree model against the selected historical
+baseline, but predicted 14.06% mean risk versus 18.72% observed. It fails the
+predeclared calibration gate, so the baseline remains selected; neither method
+is validated for live commuter decisions. November is now used test data.
+
+Use the same environment and July–October files. On a fresh checkout, download
+the additional 587 MB November file if it is absent:
+
+```bash
+curl --fail --location --output data/raw/data-2025-11.parquet \
+  https://huggingface.co/datasets/piebro/deutsche-bahn-data/resolve/3e9e69149f4008d0c24348c51d1ec79b552adaa5/monthly_processed_data/data-2025-11.parquet
+.venv/bin/python -m raildelay.risk_preflight
+.venv/bin/python -m raildelay.risk_experiment develop
+.venv/bin/python -m raildelay.risk_experiment evaluate
+```
+
+The preflight verifies the file checksum, required data types and planned-date
+coverage using only planned fields. Development fits two frequency baselines,
+three logistic regressions and two small boosted-tree models on July–August.
+September selects candidates; October applies fixed promotion criteria. The
+frozen selection and model checksums are saved before November outcomes are read.
+Training uses two numerical-library threads to keep local resource use bounded.
+
+Artifacts: `models/risk-models.joblib`, `reports/generated/risk-preflight/`, and
+`reports/generated/risk-model/`. The latter contains selection/final JSON,
+a model card (`report.md`), three charts, group errors, reliability-bin counts,
+daily coverage and prediction support context. Raw data and existing regression
+outputs remain unchanged. The reusable `RiskPredictor.predict(frame)` returns
+probabilities, reference rows/journeys/days/events, fallback level, station
+support and training period for validated station/hour/weekday/category inputs.
+
+After final outcomes are opened, `develop` refuses reselection in that output
+directory. `evaluate` can reproduce the saved comparison if code, protocol,
+package versions, data and model hashes match. A rerun never makes November
+unseen again. A new selection cycle requires a new protocol and final period;
+do not remove the test-opened marker to claim a fresh test.
 
 ## Interpretation
 
