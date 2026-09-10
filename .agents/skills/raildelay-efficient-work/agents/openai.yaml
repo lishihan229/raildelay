@@ -1,0 +1,4 @@
+interface:
+  display_name: "Raildelay Efficient Work"
+  short_description: "Advance Raildelay in small, committed, token-efficient slices"
+  default_prompt: "Continue Raildelay with the smallest complete next step."
