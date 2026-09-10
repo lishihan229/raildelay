@@ -9,7 +9,21 @@ All four schemas match. Full journey keys and chronological event separation
 were checked for the model cohorts. See `model-experiment.md` and
 `../results/first-model.md`; collection-time provenance remains unavailable.
 
+Update 2026-09-10: the [risk suitability audit](../results/risk-data-suitability.md)
+quantifies 15-minute target sensitivity and input support on these same four
+months. This source supports a retrospective proxy experiment conditionally;
+it does not establish actual commuter-risk probabilities. Missing-update
+provenance, cancellation-risk coverage, and historical feature availability
+remain gates for practical reliability.
+
 ## Preferred historical archive
+
+The second [risk experiment](risk-experiment.md) reserves November 2025 at the
+same pinned revision. Directory metadata confirms a 587,317,041-byte file with
+SHA-256 `1a44f225bed25e600d8a417cf07829951e3cf7d4fa23f5e4e3fb963efc38be7b`.
+These are remote metadata, not a verified local download. Schema, selected-station
+coverage and compatibility have not yet been established; the size increase
+relative to October requires a label-blind preflight before model fitting.
 
 [piebro/deutsche-bahn-data](https://github.com/piebro/deutsche-bahn-data) is a
 community archive of DB API records, distributed through

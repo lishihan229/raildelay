@@ -76,6 +76,30 @@ difference is not a reason to change the method selected on validation data.
 See [first experiment results](docs/results/first-model.md) and the
 [fixed protocol](docs/specs/model-experiment.md).
 
+## Audit suitability for a delay-risk application
+
+The next product direction is a commuter-facing historical estimate of the risk
+of at least 15 minutes of arrival delay. Before training a classifier, audit the
+existing four months using the same downloaded files and environment:
+
+```bash
+.venv/bin/python -m raildelay.risk_audit
+```
+
+This command checks pinned checksums and journey separation, reports ambiguous
+zero-label sensitivity and cleaning exclusions, and measures how many later
+inputs have sufficient historical sample support. It fits no model and opens no
+fresh test period. Outputs are `reports/generated/risk-audit/report.md`,
+`audit.json`, and station/category, detailed input, and daily coverage CSVs.
+Rerunning replaces only these generated audit outputs. See the
+[audit protocol](docs/specs/risk-data-audit.md) and
+[suitability decision](docs/results/risk-data-suitability.md).
+
+The [second experiment protocol](docs/specs/risk-experiment.md) fixes the risk
+target, historical baselines, a small classifier search, support fallbacks,
+selection criteria, and November 2025 as the reserved final test. This is a
+specified next experiment; its implementation and results are still pending.
+
 ## Interpretation
 
 The archive contains trains reported through DB's data sources, not exclusively

@@ -12,9 +12,21 @@ benchmark because historical feature-availability timestamps are not preserved.
 
 ## Purpose
 
-Use Python to understand railway delays, predict arrival delay, and communicate
-the findings through clear visualizations. Start with a reproducible local
-analysis before adding a dashboard or deployment.
+Build a credible machine learning portfolio project for the author's CV that
+also supports a practical travel-planning decision. Use Python to understand
+railway delays, evaluate predictions honestly, and deliver a small usable
+application backed by reproducible evidence. Prefer demonstrated user value and
+sound engineering over adding algorithms or infrastructure for appearance.
+
+Direction updated on 2026-09-10. The completed first experiment remains a
+retrospective benchmark; the following application is the next proposed slice,
+not an already validated capability.
+
+The [risk data audit](../results/risk-data-suitability.md) gives a conditional go
+for a historical proxy-risk experiment, not verified live commuter risk.
+Observation provenance is unavailable in the monthly files. The next experiment
+must use sparse-group fallbacks and a fresh final test period; a practical
+reliability claim additionally needs better observation/availability evidence.
 
 For this archive, “arrival delay” means archive-reported arrival delay with
 schedule fallback when updates are absent. It is a proxy for actual delay;
@@ -40,8 +52,18 @@ operator analysis requires reliable operator metadata first.
 
 ## Intended user and questions
 
-The initial user is the project author learning and demonstrating a complete
-data analytics and machine learning workflow.
+The intended application user is an NRW commuter planning an arrival before
+departure. The author also uses the project to demonstrate a complete data and
+machine learning workflow to potential employers.
+
+The proposed first application answers: "For this station, planned arrival
+time, and train category, what is the risk of at least 15 minutes of arrival
+delay?" Its purpose is to inform a commuter's choice of an earlier service when
+arrival time matters. Initially this is a historical risk estimate for a group
+of services, not a live prediction for an identified train. Show sample support,
+data period, and limitations alongside the estimate. Do not infer connection
+success, recommend an exact safety buffer, or treat cancellations as punctual
+arrivals; those require separate targets and evidence.
 
 - How do arrival delays vary by station, route, time of day, and day of week?
 - Where are delays frequent or severe, and how much data supports each finding?
@@ -81,9 +103,48 @@ cannot prove what was displayed at a particular historical departure time.
 Live feeds, production deployment, alerts, deep learning, multi-network support,
 and an interactive dashboard. A dashboard can follow once the analysis works.
 
+## Next slice: practical delay-risk application
+
+The second experiment is now specified in [risk-experiment.md](risk-experiment.md):
+train on July–August, select on September, confirm on October, and reserve
+November 2025 for final evaluation. November metadata is verified; schema,
+coverage and local checksum verification remain a label-blind preflight gate.
+Implementation and classifier results are pending.
+
+1. Validate the application data contract before modeling. Investigate how
+   missing updates, cancellations, and changing station coverage affect the
+   15-minute risk target. If observation provenance cannot be established,
+   retain explicit archive-proxy wording and assess whether a better source or
+   prospective collection is needed before claiming practical reliability.
+2. Specify a second experiment before fitting: usable inputs, prediction time,
+   chronological periods, baseline rules, primary metric, and success criteria.
+   Select and validate a fresh final test period; October 2025 is already used.
+3. Compare a simple historical frequency baseline, including supported groups,
+   with a small number of justified classifiers. Assess probability accuracy,
+   calibration, temporal stability, and performance across stations/categories.
+   Calibration means that events predicted at roughly 20% risk should occur
+   roughly 20% of the time. Keep records from one journey in one partition.
+4. Build a small local interface after the data and evaluation gates pass. Let
+   a user enter station, planned arrival date/time, and train category and see
+   estimated risk, supporting context, and an explicit warning or no estimate
+   for unsupported inputs. No live-feed claim without live validation.
+5. Package a portfolio release: reproducible setup, tests and GitHub CI,
+   documented model/data limitations, screenshots or a short demo, and a case
+   study explaining the user problem, baselines, results, and design decisions.
+   Public hosting is a later delivery choice, not a prerequisite for this slice.
+
+Acceptance: reproduce evaluation on a fresh chronological test period, document
+whether the model adds useful value over simple rules, and demonstrate the full
+input-to-estimate flow with limitations visible. Predeclare the practical
+improvement threshold in the experiment protocol. If ML does not beat the
+baseline, retain the baseline and explain the result; do not present complexity
+as success. A usable historical demo alone does not establish live reliability.
+
 ## Open decisions
 
-- A fresh evaluation month for any subsequent model-selection cycle.
+- How to obtain observation/availability evidence for practical reliability,
+  and how representative-user feedback will validate the historical demo's usefulness.
+- Whether reserved November 2025 passes the predeclared compatibility/coverage gate.
 - Sources that retain collection times and historical feature availability.
 - Minimum group sizes and uncertainty estimates for stronger comparisons.
 - Whether a later visualization interface should use Streamlit.

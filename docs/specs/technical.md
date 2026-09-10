@@ -145,6 +145,44 @@ chronological and journey separation, and a small end-to-end run using synthetic
 fixtures. Run relevant tests and code checks before declaring implementation
 complete. Synthetic fixtures support tests; analytical claims require real data.
 
+## Next application checkpoint (direction set 2026-09-10)
+
+Data-suitability command: `python -m raildelay.risk_audit`, specified in
+`risk-data-audit.md`. It reuses the existing cleaning and journey cohorts, reports
+15-minute proxy-label sensitivity, and checks July-only input support for later
+months. Outputs are isolated in `reports/generated/risk-audit/`; it fits no models.
+The decision and next data gates are in `../results/risk-data-suitability.md`.
+
+Keep the completed regression experiment and its frozen results reproducible.
+The proposed next target is the probability of archive-reported arrival delay
+of at least 15 minutes for a planned station/time/category. Before implementation,
+follow the fixed [risk experiment protocol](risk-experiment.md), which covers
+label quality, cancellations, prediction-time feature availability, split dates,
+baseline fallbacks, sample support and the practical improvement threshold.
+Its label-blind preflight, development selection and final evaluation must be
+separate entrypoints. November 2025 is reserved, with compatibility still pending.
+
+Use a fresh final test period and fit preprocessing, historical aggregates,
+model selection, and any probability calibration without final-test data.
+Compare probability predictions with training-only frequency baselines. Specify
+Brier score (mean squared probability error) as the proposed primary metric,
+with calibration plots, event rates, sample counts, and uncertainty estimates
+that respect journey/time dependence. Classification accuracy alone is not
+adequate. Report subgroup and later-period behavior, and separately disclose
+that the noncanceled-arrival target omits cancellation risk.
+
+Once the data and evaluation gates pass, expose the selected predictor through
+a reusable Python function and a thin local interface. Validate inputs, handle
+unsupported categories or insufficient coverage explicitly, and display data
+period and archive-proxy limitations. Choose the UI tool at that checkpoint.
+Test the prediction contract and a representative end-to-end user flow. Add
+GitHub CI for synthetic tests and code checks when the remote is configured;
+do not require downloaded datasets or private credentials for these checks.
+
+Deliver a concise model card, reproducible commands, and a portfolio case study
+with measured results and demo evidence. New infrastructure must serve this
+application; live ingestion and public deployment require their own scope.
+
 ## Implementation sequence
 
 1. Choose and document the dataset; settle the data contract and prediction time.

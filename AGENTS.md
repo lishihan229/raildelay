@@ -3,6 +3,11 @@
 ## Scope and specifications
 
 - This is a Python railway delay analytics, machine learning, and visualization project.
+- Prioritize a credible CV/portfolio project with practical user value. Choose
+  future work for a concrete user decision and measurable benefit, not model
+  complexity alone. The product spec defines the application and delivery gates.
+- Preserve honest claims: distinguish retrospective experiments, a usable demo,
+  and verified real-world performance. Do not promise predictive improvement.
 - Read `docs/specs/product.md` and `docs/specs/technical.md` before significant
   implementation. Give a short plan and concrete acceptance criteria first.
 - Keep project requirements in those specs and update them when scope changes.
@@ -16,6 +21,9 @@
 
 ## Collaboration and verification
 
+- After each prompt that changes project files, run relevant checks and commit
+  the completed work before handing back. Do not create empty commits for
+  explanation-only turns; report the commit hash and any unfinished work.
 - Explain unfamiliar tools and commands in plain language before relying on them.
 - Use Python modules for reusable logic and notebooks only where exploration helps.
 - Before declaring a code change complete, run relevant tests and checks and
