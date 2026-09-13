@@ -48,6 +48,11 @@ replaces only generated outputs at the paths below.
 Raw and processed data, generated reports, and environments are excluded from
 Git. The report and PNGs can be shared together with their attribution intact.
 
+For a GitHub-viewable, versioned copy of the September charts and their report,
+see the [visualisation snapshot](docs/visualizations/README.md). It contains no
+raw data or fitted models and preserves the archive-proxy limitation alongside
+the charts.
+
 ## Run the model experiment
 
 July, August, and October archives are already downloaded in this workspace.

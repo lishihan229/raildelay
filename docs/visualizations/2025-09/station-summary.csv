@@ -1,0 +1,11 @@
+station_name,records,median,mean,p90
+Aachen Hbf,6763,3.000,6.431,17.000
+Düsseldorf Hbf,25586,3.000,7.395,20.000
+Köln Hbf,32033,3.000,7.839,21.000
+Essen Hbf,17435,3.000,7.994,22.000
+Duisburg Hbf,17431,4.000,9.164,25.000
+Dortmund Hbf,15376,5.000,9.784,25.000
+Bochum Hbf,4017,2.000,5.296,15.000
+Wuppertal Hbf,12396,3.000,7.210,20.000
+Bonn Hbf,5779,4.000,9.316,25.000
+Mönchengladbach Hbf,6918,3.000,6.725,20.000
