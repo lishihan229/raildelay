@@ -8,7 +8,23 @@ A second command compares a median baseline and Ridge regression on July–Octob
 The risk workflow adds a >=15-minute classifier comparison with a reserved
 November evaluation and explicit probability-calibration checks.
 
-## Run locally
+## September 2025: Ergebnis-Snapshot
+
+Die reproduzierbare Explorationsanalyse umfasst **143.734** bereinigte
+Ankünfte an zehn ausgewählten NRW-Stationen. Der Median der archivgemeldeten
+Ankunftsverspätung beträgt 3 Minuten, das 90. Perzentil 22 Minuten.
+
+[![Stationsvergleich: Mediane Ankunftsverspätung und Stichprobengrößen](docs/visualizations/2025-09/station-delays.png)](docs/visualizations/2025-09/station-delays.png)
+
+[![Verteilung archivgemeldeter Ankunftsverspätungen](docs/visualizations/2025-09/delay-distribution.png)](docs/visualizations/2025-09/delay-distribution.png)
+
+Diese Werte sind ein historischer Archiv-Proxy: Nullverspätungen können fehlende
+Updates enthalten. Sie beschreiben weder aktuelle Pünktlichkeit noch alle
+NRW-Verbindungen. Der [vollständige Visualisierungs-Snapshot](docs/visualizations/README.md)
+enthält zusätzlich Tageszeit- und Abdeckungsdiagramme, die Datenherkunft sowie
+die vollständigen Einschränkungen.
+
+## Lokal reproduzieren
 
 Use Python 3.12. Run these commands from the project directory. A virtual
 environment keeps dependencies isolated; the lock file records tested versions,
